@@ -1,0 +1,187 @@
+/* src/pages/Main.module.css */
+
+.wrapper {
+  display: flex;
+  height: 100%;
+  background-color: #1F2A40;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #27314D;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+.user {
+  margin-bottom: 2rem;
+}
+.user strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #fff;
+}
+.user span {
+  color: #1FC295;
+}
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu li {
+  margin-bottom: 1rem;
+}
+.menu a {
+  color: #B0B8C4;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.menu a:hover,
+.menu a.active {
+  color: #1FC295;
+}
+/* NavLink에 적용되는 active 클래스 */
+.active {
+  color: #1FC295;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.title {
+  color: #fff;
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+/* Cameras */
+.cameras {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 2rem;
+}
+.camBox {
+  position: relative;
+  flex: 1;
+  border: 2px solid transparent;
+}
+.camBox img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.attention {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #E74C3C;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.camLabel {
+  text-align: center;
+  color: #1FC295;
+  margin-top: 0.5rem;
+}
+
+/* Stats Row */
+.statsRow {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 2rem;
+}
+.chartBox,
+.countBox,
+.donutBox {
+  background: #27314D;
+  padding: 20px;
+  flex: 1;
+  box-sizing: border-box;
+}
+.chartBox img {
+  width: 100%;
+  height: auto;
+}
+.countTitle {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.donutBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.donut {
+  text-align: center;
+}
+.circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: conic-gradient(#1FC295 var(--percent), #555 var(--percent));
+  margin: 0 auto 0.5rem;
+}
+.donutLabel {
+  color: #fff;
+}
+.chartLabel {
+  text-align: center;
+  color: #1FC295;
+  margin-top: 1rem;
+}
+
+/* Bottom Row */
+.bottomRow {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 2rem;
+}
+.mapBox,
+.reportBox {
+  background: #27314D;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.mapBox {
+  flex: 3;
+}
+.mapBox img {
+  width: 100%;
+  height: auto;
+}
+.reportBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.reports {
+  margin-top: 1rem;
+  overflow-y: auto;
+}
+.reportItem {
+  background: #1F2A40;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.reportTitle {
+  color: #1FC295;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.reportDesc {
+  color: #fff;
+  font-size: 0.9rem;
+}

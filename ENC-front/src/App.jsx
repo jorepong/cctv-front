@@ -6,8 +6,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element = {<Main></Main>} />
-      <Route path="/detail" element={ <div>상세페이지임</div> } />
-      <Route path="/about" element={ <div>어바웃페이지임</div> } />
+      <Route path="/statistics" element={ <div></div> } />
+      <Route path="/map" element={ <div></div> } />
+      <Route path="/report" element={ <div></div> } />
+      <Route path="/cam" element={ <div></div> } />
     </Routes>
   )
 }

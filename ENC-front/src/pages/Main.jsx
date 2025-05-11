@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from 'recharts';
+
 import styles from './Main.module.css';
 
-// 이미지 경로
 import schoolLogo from '../assets/school_logo.png';
 import cam1 from '../assets/CAM1.png';
 import cam2 from '../assets/CAM2.png';
 import cam3 from '../assets/CAM3.png';
-import chart from '../assets/react.svg';
 import mapImg from '../assets/REAL-MAP.png';
 import homePurple from '../assets/home_purple.png';
 import mapGray from '../assets/map_gray.png';
@@ -17,18 +19,23 @@ import hamburgerIcon from '../assets/hamburgerIcon.png';
 import backIcon from '../assets/backIcon.png';
 
 function Main() {
-  // 사이드바 열림/닫힘 상태
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  // 각 CAM별 현재 수치
   const statsData = [
     { name: 'CAM1', count: 60 },
     { name: 'CAM2', count: 80 },
     { name: 'CAM3', count: 20 },
   ];
 
-  // 색상 결정 함수: count <50: 녹색, 50≤<80: 노랑, ≥80: 빨강
+  const chartData = [
+    { time: '10:00', CAM1: 30, CAM2: 60, CAM3: 15 },
+    { time: '11:00', CAM1: 40, CAM2: 70, CAM3: 25 },
+    { time: '12:00', CAM1: 60, CAM2: 80, CAM3: 20 },
+    { time: '13:00', CAM1: 70, CAM2: 85, CAM3: 30 },
+    { time: '14:00', CAM1: 60, CAM2: 75, CAM3: 20 },
+  ];
+
   const getColor = (count) => {
     if (count < 50) return '#1FC295';
     if (count < 80) return '#FFD54F';
@@ -50,12 +57,8 @@ function Main() {
 
   return (
     <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ''}`}>
-      {/* --- Sidebar --- */}
       <nav className={styles.sidebar}>
-        <button
-          className={styles.hamburger}
-          onClick={() => setCollapsed(true)}
-        >
+        <button className={styles.hamburger} onClick={() => setCollapsed(true)}>
           <img src={hamburgerIcon} alt="Toggle menu" />
         </button>
         <div className={styles.logo}>DGU</div>
@@ -66,63 +69,41 @@ function Main() {
         <ul className={styles.menu}>
           <li>
             <img src={homePurple} alt="Home" className={styles.menuIcon} />
-            <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ''}>
-              Dash Board
-            </NavLink>
+            <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ''}>Dash Board</NavLink>
           </li>
           <li>
             <img src={statisticGray} alt="Statistics" className={styles.menuIcon} />
-            <NavLink to="/statistics" className={({ isActive }) => isActive ? styles.active : ''}>
-              Statistics
-            </NavLink>
+            <NavLink to="/statistics" className={({ isActive }) => isActive ? styles.active : ''}>Statistics</NavLink>
           </li>
           <li>
             <img src={mapGray} alt="Map" className={styles.menuIcon} />
-            <NavLink to="/map" className={({ isActive }) => isActive ? styles.active : ''}>
-              Map
-            </NavLink>
+            <NavLink to="/map" className={({ isActive }) => isActive ? styles.active : ''}>Map</NavLink>
           </li>
           <li>
             <img src={reportGray} alt="Report" className={styles.menuIcon} />
-            <NavLink to="/report" className={({ isActive }) => isActive ? styles.active : ''}>
-              Report
-            </NavLink>
+            <NavLink to="/report" className={({ isActive }) => isActive ? styles.active : ''}>Report</NavLink>
           </li>
           <li>
             <img src={mapGray} alt="CAM" className={styles.menuIcon} />
-            <NavLink to="/cam" className={({ isActive }) => isActive ? styles.active : ''}>
-              CAM
-            </NavLink>
+            <NavLink to="/cam" className={({ isActive }) => isActive ? styles.active : ''}>CAM</NavLink>
           </li>
         </ul>
       </nav>
 
-      {/* --- Main Content --- */}
       <div className={styles.content}>
-        {/* 뒤로가기 + 페이지 타이틀 */}
         <div className={styles.pageHeader}>
           {collapsed && (
-            <button
-              className={styles.backButton}
-              onClick={() => setCollapsed(false)}
-              title="뒤로가기"
-            >
+            <button className={styles.backButton} onClick={() => setCollapsed(false)}>
               <img src={backIcon} alt="Back" />
             </button>
           )}
           <h1 className={styles.title}>DASH BOARD</h1>
         </div>
 
-        {/* University Logo */}
         <div className={styles.header}>
-          <img
-            src={schoolLogo}
-            alt="Dongguk University"
-            className={styles.schoolLogo}
-          />
+          <img src={schoolLogo} alt="Dongguk University" className={styles.schoolLogo} />
         </div>
 
-        {/* Cameras */}
         <section className={styles.cameras}>
           {cameras.map(c => (
             <div key={c.name} className={styles.camBox}>
@@ -133,19 +114,25 @@ function Main() {
           ))}
         </section>
 
-        {/* Main Area: Left(Stats+Map) / Right(Reports) */}
         <section className={styles.mainArea}>
-          {/* Left Column */}
           <div className={styles.leftColumn}>
-            {/* 통계 카드 */}
             <div className={styles.statsCard}>
               <div className={styles.statsCardContent}>
-                {/* 1) Line Chart */}
+                {/* Recharts Line Chart */}
                 <div className={styles.chartBox}>
-                  <img src={chart} alt="Statistics" />
+                  <ResponsiveContainer width="100%" height={200}>
+                    <LineChart data={chartData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="time" stroke="#B0B8C4" />
+                      <YAxis stroke="#B0B8C4" />
+                      <Tooltip />
+                      <Line type="monotone" dataKey="CAM1" stroke="#1FC295" />
+                      <Line type="monotone" dataKey="CAM2" stroke="#FFD54F" />
+                      <Line type="monotone" dataKey="CAM3" stroke="#E74C3C" />
+                    </LineChart>
+                  </ResponsiveContainer>
                 </div>
 
-                {/* 2) Count Number */}
                 <div className={styles.countBox}>
                   <div className={styles.countTitle}>[Now / Max]</div>
                   {statsData.map(s => (
@@ -159,7 +146,6 @@ function Main() {
                   ))}
                 </div>
 
-                {/* 3) Population Density (Donut Charts) */}
                 <div className={styles.donutBox}>
                   {statsData.map(s => {
                     const percent = (s.count / 100) * 360;
@@ -179,14 +165,13 @@ function Main() {
                 </div>
               </div>
             </div>
-            {/* 레이블 행 */}
+
             <div className={styles.statsLabels}>
               <div>Statistics</div>
               <div>Count Number</div>
               <div>Population Density</div>
             </div>
 
-            {/* Map */}
             <div className={styles.mapContainer}>
               <div className={styles.mapBox}>
                 <img src={mapImg} alt="Map" />
@@ -195,7 +180,6 @@ function Main() {
             </div>
           </div>
 
-          {/* Right Column: Reports */}
           <div className={styles.rightColumn}>
             <div className={styles.reportsContainer}>
               <div className={styles.reportsBox}>

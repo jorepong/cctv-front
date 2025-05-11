@@ -1,5 +1,3 @@
-/* src/pages/Main.module.css */
-
 .wrapper {
   display: flex;
   height: 100%;
@@ -21,13 +19,15 @@
 }
 .user {
   margin-bottom: 2rem;
+  text-align: center;
 }
 .user strong {
   display: block;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
   color: #fff;
 }
 .user span {
+  font-size: 1rem;
   color: #1FC295;
 }
 .menu {
@@ -36,7 +36,14 @@
   margin: 0;
 }
 .menu li {
+  display: flex;
+  align-items: center;
   margin-bottom: 1rem;
+}
+.menuIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
 }
 .menu a {
   color: #B0B8C4;
@@ -47,18 +54,32 @@
 .menu a.active {
   color: #1FC295;
 }
-/* NavLink에 적용되는 active 클래스 */
-.active {
-  color: #1FC295;
-}
 
 /* Content */
 .content {
+  position: relative; /* 추가: logo 절대 위치 지정 컨텍스트 */
   flex: 1;
   padding: 20px 40px;
   box-sizing: border-box;
   overflow-y: auto;
 }
+
+/* Header - 로고 영역 */
+.header {
+  width: 100%;
+  /* 필요 시 높이 조정 가능 */
+}
+
+/* 학교 로고 */
+.schoolLogo {
+  position: absolute;
+  top: 25px;
+  right: 40px; /* content의 padding-right 와 맞춰줌 */
+  width: 120px; /* 로고 크기 조정 */
+  height: auto;
+}
+
+/* 페이지 타이틀 */
 .title {
   color: #fff;
   font-size: 1.75rem;
@@ -96,79 +117,124 @@
   margin-top: 0.5rem;
 }
 
-/* Stats Row */
-.statsRow {
+/* --- Main Area --- */
+.mainArea {
   display: flex;
   gap: 20px;
   margin-bottom: 2rem;
 }
-.chartBox,
-.countBox,
-.donutBox {
+.leftColumn {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.rightColumn {
+  flex: 1;
+}
+
+/* 통계 카드 */
+.statsCard {
   background: #27314D;
   padding: 20px;
-  flex: 1;
   box-sizing: border-box;
+}
+.statsCardContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.chartBox {
+  flex: 1;
 }
 .chartBox img {
   width: 100%;
   height: auto;
 }
-.countTitle {
+.countBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: #fff;
-  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+.countTitle {
+  margin-bottom: 0.5rem;
+}
+.countItem + .countItem {
+  margin-top: 0.5rem;
 }
 .donutBox {
+  flex: 1;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
 .donut {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .circle {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: conic-gradient(#1FC295 var(--percent), #555 var(--percent));
-  margin: 0 auto 0.5rem;
 }
 .donutLabel {
   color: #fff;
+  white-space: nowrap;
+  font-size: 0.9rem;
 }
-.chartLabel {
-  text-align: center;
+.statsLabels {
+  display: flex;
+  justify-content: space-around;
   color: #1FC295;
-  margin-top: 1rem;
+  font-size: 1rem;
+  margin-left: 3rem;
+  padding: 0 20px;
 }
 
-/* Bottom Row */
-.bottomRow {
+/* Map 영역 전체를 감싸는 컨테이너 */
+.mapContainer {
   display: flex;
-  gap: 20px;
-  margin-bottom: 2rem;
+  flex-direction: column;
+  gap: 8px;
 }
-.mapBox,
-.reportBox {
+.mapBox {
   background: #27314D;
   padding: 20px;
   box-sizing: border-box;
-}
-.mapBox {
-  flex: 3;
+  height: 240px;
 }
 .mapBox img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
-.reportBox {
-  flex: 1;
+.mapLabel {
+  text-align: center;
+  color: #1FC295;
+  font-size: 1rem;
+}
+
+/* Reports 콘테이너 */
+.reportsContainer {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
 }
-.reports {
-  margin-top: 1rem;
+.reportsBox {
+  background: #27314D;
+  padding: 20px;
+  box-sizing: border-box;
   overflow-y: auto;
+  flex: 1;
 }
 .reportItem {
   background: #1F2A40;
@@ -184,4 +250,10 @@
 .reportDesc {
   color: #fff;
   font-size: 0.9rem;
+}
+.reportsLabel {
+  text-align: center;
+  color: #1FC295;
+  font-size: 1rem;
+  margin-top: 8px;
 }

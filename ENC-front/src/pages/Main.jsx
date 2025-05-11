@@ -1,16 +1,34 @@
-// src/pages/Main.jsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Main.module.css';
 
-// 이미지 경로는 실제 프로젝트 경로에 맞게 바꿔주세요
-import cam1 from '../assets/react.svg';
-import cam2 from '../assets/react.svg';
-import cam3 from '../assets/react.svg';
+// 이미지 경로
+import schoolLogo from '../assets/school_logo.png';
+import cam1 from '../assets/CAM1.png';
+import cam2 from '../assets/CAM2.png';
+import cam3 from '../assets/CAM3.png';
 import chart from '../assets/react.svg';
-import mapImg from '../assets/react.svg';
+import mapImg from '../assets/REAL-MAP.png';
+import homePurple from '../assets/home_purple.png';
+import mapGray from '../assets/map_gray.png';
+import reportGray from '../assets/report_gray.png';
+import statisticGray from '../assets/statistic_gray.png';
 
 function Main() {
+  // 각 CAM별 현재 수치
+  const statsData = [
+    { name: 'CAM1', count: 60 },
+    { name: 'CAM2', count: 80 },
+    { name: 'CAM3', count: 20 },
+  ];
+
+  // 색상 결정 함수: count <50: 녹색, 50≤<80: 노랑, ≥80: 빨강
+  const getColor = (count) => {
+    if (count < 50) return '#1FC295';
+    if (count < 80) return '#FFD54F';
+    return '#E74C3C';
+  };
+
   const cameras = [
     { img: cam1, name: 'CAM1' },
     { img: cam2, name: 'CAM2', attention: true },
@@ -35,26 +53,31 @@ function Main() {
         </div>
         <ul className={styles.menu}>
           <li>
+            <img src={homePurple} alt="Home" className={styles.menuIcon} />
             <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ''}>
               Dash Board
             </NavLink>
           </li>
           <li>
+            <img src={statisticGray} alt="Statistics" className={styles.menuIcon} />
             <NavLink to="/statistics" className={({ isActive }) => isActive ? styles.active : ''}>
               Statistics
             </NavLink>
           </li>
           <li>
+            <img src={mapGray} alt="Map" className={styles.menuIcon} />
             <NavLink to="/map" className={({ isActive }) => isActive ? styles.active : ''}>
               Map
             </NavLink>
           </li>
           <li>
+            <img src={reportGray} alt="Report" className={styles.menuIcon} />
             <NavLink to="/report" className={({ isActive }) => isActive ? styles.active : ''}>
               Report
             </NavLink>
           </li>
           <li>
+            <img src={mapGray} alt="CAM" className={styles.menuIcon} />
             <NavLink to="/cam" className={({ isActive }) => isActive ? styles.active : ''}>
               CAM
             </NavLink>
@@ -64,6 +87,15 @@ function Main() {
 
       {/* --- Main Content --- */}
       <div className={styles.content}>
+        {/* University Logo */}
+        <div className={styles.header}>
+          <img
+            src={schoolLogo}
+            alt="Dongguk University"
+            className={styles.schoolLogo}
+          />
+        </div>
+
         <h1 className={styles.title}>DASH BOARD</h1>
 
         {/* Cameras */}
@@ -77,61 +109,82 @@ function Main() {
           ))}
         </section>
 
-        {/* Statistics Row */}
-        <section className={styles.statsRow}>
-          {/* Line Chart */}
-          <div className={styles.chartBox}>
-            <img src={chart} alt="Statistics" />
-            <div className={styles.chartLabel}>Statistics</div>
-          </div>
-
-          {/* Count Numbers */}
-          <div className={styles.countBox}>
-            <div className={styles.countTitle}>[Now / Max]</div>
-            <div>CAM1: <strong>60</strong> / 100</div>
-            <div>CAM2: <strong>80</strong> / 100</div>
-            <div>CAM3: <strong>20</strong> / 100</div>
-            <div className={styles.chartLabel}>Count Number</div>
-          </div>
-
-          {/* Donut Charts */}
-          <div className={styles.donutBox}>
-            <div className={styles.donut}>
-              <div className={styles.circle} style={{ '--percent': '60deg' }} />
-              <div className={styles.donutLabel}>CAM1</div>
-            </div>
-            <div className={styles.donut}>
-              <div className={styles.circle} style={{ '--percent': '80deg' }} />
-              <div className={styles.donutLabel}>CAM2</div>
-            </div>
-            <div className={styles.donut}>
-              <div className={styles.circle} style={{ '--percent': '20deg' }} />
-              <div className={styles.donutLabel}>CAM3</div>
-            </div>
-            <div className={styles.chartLabel}>Population Density</div>
-          </div>
-        </section>
-
-        {/* Bottom Row: Map & Reports */}
-        <section className={styles.bottomRow}>
-          {/* Map */}
-          <div className={styles.mapBox}>
-            <img src={mapImg} alt="Map" />
-            <div className={styles.chartLabel}>Map</div>
-          </div>
-
-          {/* Reports */}
-          <div className={styles.reportBox}>
-            <div className={styles.chartLabel}>Reports</div>
-            <div className={styles.reports}>
-              {reports.map(r => (
-                <div key={r.id} className={styles.reportItem}>
-                  <div className={styles.reportTitle}>
-                    Report #{r.id}: {r.time}
-                  </div>
-                  <div className={styles.reportDesc}>anonymous people</div>
+        {/* Main Area: Left(Stats+Map) / Right(Reports) */}
+        <section className={styles.mainArea}>
+          {/* Left Column */}
+          <div className={styles.leftColumn}>
+            {/* 통계 카드 */}
+            <div className={styles.statsCard}>
+              <div className={styles.statsCardContent}>
+                {/* 1) Line Chart */}
+                <div className={styles.chartBox}>
+                  <img src={chart} alt="Statistics" />
                 </div>
-              ))}
+
+                {/* 2) Count Number */}
+                <div className={styles.countBox}>
+                  <div className={styles.countTitle}>[Now / Max]</div>
+                  {statsData.map(s => (
+                    <div key={s.name} className={styles.countItem}>
+                      {s.name}:{' '}
+                      <strong style={{ color: getColor(s.count) }}>
+                        {s.count}
+                      </strong>{' '}
+                      / 100
+                    </div>
+                  ))}
+                </div>
+
+                {/* 3) Population Density (Donut Charts) */}
+                <div className={styles.donutBox}>
+                  {statsData.map(s => {
+                    const percent = (s.count / 100) * 360;
+                    const c = getColor(s.count);
+                    return (
+                      <div key={s.name} className={styles.donut}>
+                        <div
+                          className={styles.circle}
+                          style={{
+                            background: `conic-gradient(${c} ${percent}deg, #555 ${percent}deg)`
+                          }}
+                        />
+                        <div className={styles.donutLabel}>{s.name}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            {/* 레이블 행 */}
+            <div className={styles.statsLabels}>
+              <div>Statistics</div>
+              <div>Count Number</div>
+              <div>Population Density</div>
+            </div>
+
+            {/* Map */}
+            <div className={styles.mapContainer}>
+              <div className={styles.mapBox}>
+                <img src={mapImg} alt="Map" />
+              </div>
+              <div className={styles.mapLabel}>Map</div>
+            </div>
+          </div>
+
+          {/* Right Column: Reports */}
+          <div className={styles.rightColumn}>
+            <div className={styles.reportsContainer}>
+              <div className={styles.reportsBox}>
+                {reports.map(r => (
+                  <div key={r.id} className={styles.reportItem}>
+                    <div className={styles.reportTitle}>
+                      Report #{r.id}: {r.time}
+                    </div>
+                    <div className={styles.reportDesc}>anonymous people</div>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.reportsLabel}>Reports</div>
             </div>
           </div>
         </section>

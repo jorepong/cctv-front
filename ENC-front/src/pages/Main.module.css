@@ -2,15 +2,50 @@
   display: flex;
   height: 100%;
   background-color: #1F2A40;
+  transition: all 0.3s ease;
+}
+
+/* 사이드바 숨김 상태 */
+.collapsed .sidebar {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* 사이드바가 접히면 메인 콘텐츠에 센터링 스타일 적용 */
+.collapsed .content {
+  flex: none;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Sidebar */
 .sidebar {
+  position: relative;
   width: 240px;
   background-color: #27314D;
   padding: 20px;
   box-sizing: border-box;
+  transition: width 0.3s ease, padding 0.3s ease;
 }
+
+/* 햄버거 버튼 */
+.hamburger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 10;
+}
+.hamburger img {
+  width: 24px;
+  height: 24px;
+}
+
 .logo {
   font-size: 1.25rem;
   font-weight: bold;
@@ -57,33 +92,55 @@
 
 /* Content */
 .content {
-  position: relative; /* 추가: logo 절대 위치 지정 컨텍스트 */
+  position: relative;
   flex: 1;
   padding: 20px 40px;
   box-sizing: border-box;
   overflow-y: auto;
+  transition: all 0.3s ease;
 }
 
-/* Header - 로고 영역 */
-.header {
-  width: 100%;
-  /* 필요 시 높이 조정 가능 */
+/* 페이지 헤더: 뒤로가기 + 타이틀 */
+.pageHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-/* 학교 로고 */
-.schoolLogo {
-  position: absolute;
-  top: 25px;
-  right: 40px; /* content의 padding-right 와 맞춰줌 */
-  width: 120px; /* 로고 크기 조정 */
-  height: auto;
+/* 뒤로가기 버튼 */
+.backButton {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+.backButton img {
+  width: 24px;
+  height: 24px;
 }
 
 /* 페이지 타이틀 */
 .title {
   color: #fff;
   font-size: 1.75rem;
-  margin-bottom: 2rem;
+  margin: 0; /* pageHeader에서 margin-bottom만 주고 위아래 마진 제거 */
+}
+
+/* Header - 로고 영역 */
+.header {
+  width: 100%;
+}
+
+/* 학교 로고 */
+.schoolLogo {
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  width: 120px;
+  height: auto;
 }
 
 /* Cameras */

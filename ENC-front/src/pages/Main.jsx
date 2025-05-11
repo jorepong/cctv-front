@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Main.module.css';
 
 // 이미지 경로
@@ -13,8 +13,14 @@ import homePurple from '../assets/home_purple.png';
 import mapGray from '../assets/map_gray.png';
 import reportGray from '../assets/report_gray.png';
 import statisticGray from '../assets/statistic_gray.png';
+import hamburgerIcon from '../assets/hamburgerIcon.png';
+import backIcon from '../assets/backIcon.png';
 
 function Main() {
+  // 사이드바 열림/닫힘 상태
+  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
   // 각 CAM별 현재 수치
   const statsData = [
     { name: 'CAM1', count: 60 },
@@ -43,9 +49,15 @@ function Main() {
   ];
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ''}`}>
       {/* --- Sidebar --- */}
       <nav className={styles.sidebar}>
+        <button
+          className={styles.hamburger}
+          onClick={() => setCollapsed(true)}
+        >
+          <img src={hamburgerIcon} alt="Toggle menu" />
+        </button>
         <div className={styles.logo}>DGU</div>
         <div className={styles.user}>
           <strong>Tester</strong>
@@ -87,6 +99,20 @@ function Main() {
 
       {/* --- Main Content --- */}
       <div className={styles.content}>
+        {/* 뒤로가기 + 페이지 타이틀 */}
+        <div className={styles.pageHeader}>
+          {collapsed && (
+            <button
+              className={styles.backButton}
+              onClick={() => setCollapsed(false)}
+              title="뒤로가기"
+            >
+              <img src={backIcon} alt="Back" />
+            </button>
+          )}
+          <h1 className={styles.title}>DASH BOARD</h1>
+        </div>
+
         {/* University Logo */}
         <div className={styles.header}>
           <img
@@ -95,8 +121,6 @@ function Main() {
             className={styles.schoolLogo}
           />
         </div>
-
-        <h1 className={styles.title}>DASH BOARD</h1>
 
         {/* Cameras */}
         <section className={styles.cameras}>

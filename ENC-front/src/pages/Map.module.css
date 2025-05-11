@@ -33,6 +33,7 @@
   right: 20px;
   background: none;
   border: none;
+  padding: 4px;
   cursor: pointer;
   z-index: 10;
 }
@@ -74,7 +75,7 @@
 .menuIcon {
   width: 24px;
   height: 24px;
-  margin-right: 8px;
+  margin-right: 5px;
 }
 .menu a {
   color: #B0B8C4;
@@ -150,8 +151,8 @@
 /* ping icons */
 .ping {
   position: absolute;
-  width: 48px;
-  height: 48px;
+  width: 100px;
+  height: 100px;
   transform: translate(-50%, -100%);
   cursor: pointer;
 }
@@ -178,8 +179,8 @@
   cursor: pointer;
 }
 .marker {
-  width: 24px;
-  height: 24px;
+  width: 50px;
+  height: 50px;
   background-size: cover;
   margin-right: 8px;
 }

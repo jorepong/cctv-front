@@ -6,9 +6,9 @@ import styles from './Map.module.css';
 // assets
 import schoolLogo from '../assets/school_logo.png';
 import mapImg from '../assets/LargeMap.png';
-import homePurple from '../assets/home_purple.png';
+import homeGray from '../assets/home_gray.png';
 import statisticGray from '../assets/statistic_gray.png';
-import mapGray from '../assets/map_gray.png';
+import mapPurple from '../assets/map_purple.png';
 import reportGray from '../assets/report_gray.png';
 import camGray from '../assets/map_gray.png';
 import hamburgerIcon from '../assets/hamburgerIcon.png';
@@ -52,7 +52,7 @@ function Map() {
         </div>
         <ul className={styles.menu}>
           <li>
-            <img src={homePurple} alt="Dash Board" className={styles.menuIcon} />
+            <img src={homeGray} alt="Dash Board" className={styles.menuIcon} />
             <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ''}>
               Dash Board
             </NavLink>
@@ -64,7 +64,7 @@ function Map() {
             </NavLink>
           </li>
           <li>
-            <img src={mapGray} alt="Map" className={styles.menuIcon} />
+            <img src={mapPurple} alt="Map" className={styles.menuIcon} />
             <NavLink to="/map" className={({ isActive }) => isActive ? styles.active : ''}>
               Map
             </NavLink>

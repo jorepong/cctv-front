@@ -1,0 +1,195 @@
+/* src/components/Map.module.css */
+
+.wrapper {
+  display: flex;
+  height: 100vh;
+  background-color: #1F2A40;
+  transition: all 0.3s ease;
+}
+.collapsed .sidebar {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.collapsed .content {
+  flex: none;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.sidebar {
+  position: relative;
+  width: 240px;
+  background-color: #27314D;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: width 0.3s ease, padding 0.3s ease;
+}
+.hamburger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+.hamburger img {
+  width: 24px;
+  height: 24px;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+.user {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.user strong {
+  display: block;
+  font-size: 1.6rem;
+  color: #fff;
+}
+.user span {
+  font-size: 1rem;
+  color: #1FC295;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.menuIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+.menu a {
+  color: #B0B8C4;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.menu a:hover,
+.menu a.active {
+  color: #1FC295;
+}
+
+/* Main Content */
+.content {
+  position: relative;
+  flex: 1;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.titleGroup {
+  display: flex;
+  align-items: center;
+}
+.backButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 12px;
+}
+.backButton img {
+  width: 24px;
+  height: 24px;
+}
+.title {
+  color: #fff;
+  font-size: 1.75rem;
+  margin: 0;
+}
+.schoolLogo {
+  width: 120px;
+  height: auto;
+}
+
+/* Map Area */
+.mapArea {
+  background-color: #27314D;
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.mapWrapper {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.mapWrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+/* ping icons */
+.ping {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  transform: translate(-50%, -100%);
+  cursor: pointer;
+}
+
+@keyframes blinkAnim {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+.blink {
+  animation: blinkAnim 0.5s ease-in-out infinite;
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.legendItem {
+  display: flex;
+  align-items: center;
+  font-size: 1.25rem;
+  color: #B0B8C4;
+  cursor: pointer;
+}
+.marker {
+  width: 24px;
+  height: 24px;
+  background-size: cover;
+  margin-right: 8px;
+}
+
+/* blinking text */
+.blinkText {
+  animation: blinkAnim 0.5s ease-in-out infinite;
+}
+
+/* active text color */
+.activeText {
+  color: #1FC295;
+}

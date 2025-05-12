@@ -10,7 +10,7 @@ import homeGray from '../assets/home_gray.png';
 import statisticGray from '../assets/statistic_gray.png';
 import mapPurple from '../assets/map_purple.png';
 import reportGray from '../assets/report_gray.png';
-import camGray from '../assets/map_gray.png';
+import camGray from '../assets/cam_gray.png';
 import hamburgerIcon from '../assets/hamburgerIcon.png';
 import backIcon from '../assets/backIcon.png';
 import redPing from '../assets/redPing.png';

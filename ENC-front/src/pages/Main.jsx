@@ -14,6 +14,7 @@ import mapImg from '../assets/REAL-MAP.png';
 import homePurple from '../assets/home_purple.png';
 import mapGray from '../assets/map_gray.png';
 import reportGray from '../assets/report_gray.png';
+import camGray from '../assets/cam_gray.png';
 import statisticGray from '../assets/statistic_gray.png';
 import hamburgerIcon from '../assets/hamburgerIcon.png';
 import backIcon from '../assets/backIcon.png';
@@ -84,7 +85,7 @@ function Main() {
             <NavLink to="/report" className={({ isActive }) => isActive ? styles.active : ''}>Report</NavLink>
           </li>
           <li>
-            <img src={mapGray} alt="CAM" className={styles.menuIcon} />
+            <img src={camGray} alt="CAM" className={styles.menuIcon} />
             <NavLink to="/cam" className={({ isActive }) => isActive ? styles.active : ''}>CAM</NavLink>
           </li>
         </ul>

@@ -1,0 +1,181 @@
+.wrapper {
+  display: flex;
+  height: 100%;
+  background-color: #1F2A40;
+  transition: all 0.3s ease;
+}
+
+.collapsed .sidebar {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.collapsed .content {
+  flex: none;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.sidebar {
+  position: relative;
+  width: 240px;
+  background-color: #27314D;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: width 0.3s ease, padding 0.3s ease;
+}
+
+.hamburger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 10;
+}
+.hamburger img {
+  width: 24px;
+  height: 24px;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+.user {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.user strong {
+  display: block;
+  font-size: 1.6rem;
+  color: #fff;
+}
+.user span {
+  font-size: 1rem;
+  color: #1FC295;
+}
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.menu li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.menuIcon {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+.menu a {
+  color: #B0B8C4;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.menu a:hover,
+.menu a.active {
+  color: #1FC295;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+/* Header: title + logo */
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+.backButton img {
+  width: 24px;
+  height: 24px;
+}
+
+.title {
+  color: #fff;
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+/* Logo */
+.schoolLogo {
+  width: 120px;
+  height: auto;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 1.5rem;
+}
+.tab {
+  padding: 8px 16px;
+  background: #27314D;
+  border: none;
+  border-radius: 4px;
+  color: #B0B8C4;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.activeTab {
+  background: #1FC295;
+  color: #27314D;
+}
+
+/* Chart */
+.chartContainer {
+  background: #27314D;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+/* Data Boxes */
+.dataBoxes {
+  display: flex;
+  gap: 20px;
+}
+.dataBox {
+  background: #27314D;
+  padding: 20px;
+  box-sizing: border-box;
+  flex: 1;
+  border-radius: 8px;
+}
+.dataBox h3 {
+  color: #1FC295;
+  margin-bottom: 1rem;
+}
+.dataItem {
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}

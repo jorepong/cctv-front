@@ -1,0 +1,152 @@
+/* wrapper & collapsed */
+.wrapper {
+  display: flex;
+  height: 100%;
+  background-color: #1F2A40;
+  transition: all 0.3s ease;
+}
+.collapsed .sidebar {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.collapsed .content {
+  flex: none;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.sidebar {
+  position: relative;
+  width: 240px;
+  background-color: #27314D;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: width 0.3s ease, padding 0.3s ease;
+}
+.hamburger {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 10;
+}
+.hamburger img { width: 24px; height: 24px; }
+.logo { color: #fff; font-size: 1.25rem; font-weight: bold; margin-bottom: 2rem; }
+.user { text-align: center; margin-bottom: 2rem; }
+.user strong { color: #fff; font-size: 1.6rem; display: block; }
+.user span { color: #1FC295; }
+.menu { list-style: none; padding: 0; margin: 0; }
+.menu li { display: flex; align-items: center; margin-bottom: 1rem; }
+.menuIcon { width: 24px; height: 24px; margin-right: 5px; }
+.menu a { color: #B0B8C4; text-decoration: none; font-size: 1rem; }
+.menu a.active, .menu a:hover { color: #1FC295; }
+
+/* Content */
+.content {
+  position: relative;
+  flex: 1;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+/* Header */
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.titleGroup { display: flex; align-items: center; }
+.backButton { background: none; border: none; cursor: pointer; margin-right: 12px; }
+.backButton img { width: 24px; height: 24px; }
+.title { color: #fff; font-size: 1.75rem; margin: 0; }
+.schoolLogo { width: 120px; height: auto; }
+
+/* CAM 전체 컨테이너 */
+.camContainer {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: #27314D;
+  border: 1px solid #fff;
+  border-radius: 8px;
+}
+
+/* 큰 화면 박스 */
+.camBox {
+  position: relative;
+  flex: 2;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+.camImage {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.camLabelBig {
+  text-align: center;
+  color: #1FC295;
+  font-size: 1.5rem;
+  margin-top: 8px;
+}
+
+/* 작은 화면 컨테이너 */
+.smallCams {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.camBoxSmall {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+.camImageSmall {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.camLabelSmall {
+  text-align: center;
+  color: #1FC295;
+  font-size: 1.25rem;
+  margin-top: 4px;
+}
+
+/* Attention 상태 - 이미지에만 적용 */
+.attentionImage {
+  border-color: #E74C3C !important;
+}
+.attentionImageSmall {
+  border-color: #E74C3C !important;
+}
+.attentionBadge,
+.attentionBadgeSmall {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #E74C3C;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import Hls from 'hls.js';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
@@ -7,9 +8,9 @@ import {
 import styles from './Main.module.css';
 
 import schoolLogo from '../assets/school_logo.png';
-import cam1 from '../assets/CAM1.png';
-import cam2 from '../assets/CAM2.png';
-import cam3 from '../assets/CAM3.png';
+// import cam1 from '../assets/CAM1.png';
+// import cam2 from '../assets/CAM2.png';
+// import cam3 from '../assets/CAM3.png';
 import mapImg from '../assets/REAL-MAP.png';
 import homePurple from '../assets/home_purple.png';
 import mapGray from '../assets/map_gray.png';
@@ -19,7 +20,40 @@ import statisticGray from '../assets/statistic_gray.png';
 import hamburgerIcon from '../assets/hamburgerIcon.png';
 import backIcon from '../assets/backIcon.png';
 
-function Main() {
+function CamPlayer({ url, attention }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+      return () => {
+        hls.destroy();
+      };
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = url;
+    }
+  }, [url]);
+
+  return (
+    <div className={styles.camBox}>
+      <video
+        ref={videoRef}
+        controls
+        autoPlay
+        muted
+        className={styles.camVideo}
+        style={{ width: '100%', height: 'auto' }}
+      />
+      {attention && <div className={styles.attention}>Attention</div>}
+      <div className={styles.camLabel}>{url.split('/').slice(-2, -1)[0].toUpperCase()}</div>
+    </div>
+  );
+}
+
+export default function Main() {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
@@ -43,10 +77,11 @@ function Main() {
     return '#E74C3C';
   };
 
+  // HLS 스트림 URL 배열
   const cameras = [
-    { img: cam1, name: 'CAM1' },
-    { img: cam2, name: 'CAM2', attention: true },
-    { img: cam3, name: 'CAM3' },
+    { url: 'http://localhost:8000/cam1/stream.m3u8', name: 'CAM1' },
+    { url: 'http://localhost:8000/cam1/stream.m3u8', name: 'CAM2', attention: true },
+    { url: 'http://localhost:8000/cam1/stream.m3u8', name: 'CAM3' },
   ];
 
   const reports = [
@@ -106,12 +141,8 @@ function Main() {
         </div>
 
         <section className={styles.cameras}>
-          {cameras.map(c => (
-            <div key={c.name} className={styles.camBox}>
-              <img src={c.img} alt={c.name} />
-              {c.attention && <div className={styles.attention}>Attention</div>}
-              <div className={styles.camLabel}>{c.name}</div>
-            </div>
+          {cameras.map(cam => (
+            <CamPlayer key={cam.name} url={cam.url} attention={cam.attention} />
           ))}
         </section>
 
@@ -119,7 +150,6 @@ function Main() {
           <div className={styles.leftColumn}>
             <div className={styles.statsCard}>
               <div className={styles.statsCardContent}>
-                {/* Recharts Line Chart */}
                 <div className={styles.chartBox}>
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={chartData}>
@@ -201,5 +231,3 @@ function Main() {
     </div>
   );
 }
-
-export default Main;

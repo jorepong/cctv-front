@@ -1,6 +1,7 @@
 // src/components/Cam.jsx
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import Hls from 'hls.js';
 import styles from './Cam.module.css';
 
 import schoolLogo from '../assets/school_logo.png';
@@ -12,20 +13,46 @@ import camPurple from '../assets/cam_purple.png';
 import hamburgerIcon from '../assets/hamburgerIcon.png';
 import backIcon from '../assets/backIcon.png';
 
-// CCTV 이미지
-import cam1Img from '../assets/CAM1.png';
-import cam2Img from '../assets/CAM2.png';
-import cam3Img from '../assets/CAM3.png';
+function CamPlayer({ url, attention }) {
+  const videoRef = useRef(null);
 
-function Cam() {
+  useEffect(() => {
+    const video = videoRef.current;
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(url);
+      hls.attachMedia(video);
+      return () => { hls.destroy(); };
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = url;
+    }
+  }, [url]);
+
+  return (
+    <div className={styles.camBox}>
+      <video
+        ref={videoRef}
+        controls
+        autoPlay
+        muted
+        className={`${styles.camVideo} ${attention ? styles.attentionVideo : ''}`}
+      />
+      {attention && <div className={styles.attention}>Attention</div>}
+      <div className={styles.camLabel}>
+        {url.split('/').slice(-2, -1)[0].toUpperCase()}
+      </div>
+    </div>
+  );
+}
+
+export default function Cam() {
   const [collapsed, setCollapsed] = useState(false);
   const [selected, setSelected] = useState('CAM1');
 
-  // 각 카메라 정보
   const cams = [
-    { id: 'CAM1', src: cam1Img, attention: true },
-    { id: 'CAM2', src: cam2Img, attention: false },
-    { id: 'CAM3', src: cam3Img, attention: false },
+    { id: 'CAM1', url: 'http://localhost:8000/cam1/stream.m3u8', attention: true },
+    { id: 'CAM2', url: 'http://localhost:8000/cam2/stream.m3u8', attention: false },
+    { id: 'CAM3', url: 'http://localhost:8000/cam3/stream.m3u8', attention: false },
   ];
 
   const currentCam = cams.find(c => c.id === selected) || cams[0];
@@ -94,16 +121,8 @@ function Cam() {
         {/* CAM 뷰어 */}
         <div className={styles.camContainer}>
           {/* 큰 화면 */}
-          <div className={styles.camBox} onClick={() => {}}>
-            <img
-              src={currentCam.src}
-              alt={currentCam.id}
-              className={`${styles.camImage} ${currentCam.attention ? styles.attentionImage : ''}`}
-            />
-            {currentCam.attention && (
-              <div className={styles.attentionBadge}>Attention</div>
-            )}
-            <div className={styles.camLabelBig}>{currentCam.id}</div>
+          <div className={styles.camBoxLarge}>
+            <CamPlayer url={currentCam.url} attention={currentCam.attention} />
           </div>
 
           {/* 작은 화면들 */}
@@ -114,22 +133,12 @@ function Cam() {
                 className={styles.camBoxSmall}
                 onClick={() => setSelected(cam.id)}
               >
-                <img
-                  src={cam.src}
-                  alt={cam.id}
-                  className={`${styles.camImageSmall} ${cam.attention ? styles.attentionImageSmall : ''}`}
-                />
-                {cam.attention && (
-                  <div className={styles.attentionBadgeSmall}>Attention</div>
-                )}
-                <div className={styles.camLabelSmall}>{cam.id}</div>
+                <CamPlayer url={cam.url} attention={cam.attention} />
               </div>
             ))}
           </div>
         </div>
       </div>
     </div>
-  );
+);
 }
-
-export default Cam;

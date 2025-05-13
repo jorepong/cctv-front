@@ -1,4 +1,6 @@
-/* wrapper & collapsed */
+/* src/components/Cam.module.css */
+
+/* Wrapper & Collapse */
 .wrapper {
   display: flex;
   height: 100%;
@@ -81,22 +83,39 @@
 }
 
 /* 큰 화면 박스 */
-.camBox {
+.camBoxLarge {
   position: relative;
   flex: 2;
-  overflow: hidden;
-  border: 2px solid transparent;
-  border-radius: 4px;
 }
-.camImage {
-  width: 100%;
+.camVideo {
   display: block;
-  object-fit: cover;
-  border: 2px solid transparent;
+  width: 100%;
+  height: auto;
+  border: 2px solid #fff;
   border-radius: 4px;
   box-sizing: border-box;
 }
-.camLabelBig {
+/* Attention 상태 - 5초 깜빡임 후 고정 */
+@keyframes blink-border {
+  0%, 100% { border-color: #E74C3C; }
+  50% { border-color: transparent; }
+}
+.attentionVideo {
+  animation: blink-border 0.5s ease-in-out 10;
+  animation-fill-mode: forwards;
+}
+.attention {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #E74C3C;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+.camLabel {
   text-align: center;
   color: #1FC295;
   font-size: 1.5rem;
@@ -112,41 +131,9 @@
 }
 .camBoxSmall {
   position: relative;
-  overflow: hidden;
-  border: 2px solid transparent;
+  max-height: 500px;
+}
+.camBoxSmall .camVideo {
   border-radius: 4px;
-}
-.camImageSmall {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-.camLabelSmall {
-  text-align: center;
-  color: #1FC295;
-  font-size: 1.25rem;
-  margin-top: 4px;
-}
-
-/* Attention 상태 - 이미지에만 적용 */
-.attentionImage {
-  border-color: #E74C3C !important;
-}
-.attentionImageSmall {
-  border-color: #E74C3C !important;
-}
-.attentionBadge,
-.attentionBadgeSmall {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #E74C3C;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: bold;
+  border: 2px solid #fff;
 }

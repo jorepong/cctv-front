@@ -1,3 +1,4 @@
+// src/components/Main.jsx
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Hls from 'hls.js';
@@ -8,9 +9,6 @@ import {
 import styles from './Main.module.css';
 
 import schoolLogo from '../assets/school_logo.png';
-// import cam1 from '../assets/CAM1.png';
-// import cam2 from '../assets/CAM2.png';
-// import cam3 from '../assets/CAM3.png';
 import mapImg from '../assets/REAL-MAP.png';
 import homePurple from '../assets/home_purple.png';
 import mapGray from '../assets/map_gray.png';
@@ -29,9 +27,7 @@ function CamPlayer({ url, attention }) {
       const hls = new Hls();
       hls.loadSource(url);
       hls.attachMedia(video);
-      return () => {
-        hls.destroy();
-      };
+      return () => { hls.destroy(); };
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = url;
     }
@@ -44,11 +40,13 @@ function CamPlayer({ url, attention }) {
         controls
         autoPlay
         muted
-        className={styles.camVideo}
+        className={`${styles.camVideo} ${attention ? styles.attentionVideo : ''}`}
         style={{ width: '100%', height: 'auto' }}
       />
       {attention && <div className={styles.attention}>Attention</div>}
-      <div className={styles.camLabel}>{url.split('/').slice(-2, -1)[0].toUpperCase()}</div>
+      <div className={styles.camLabel}>
+        {url.split('/').slice(-2, -1)[0].toUpperCase()}
+      </div>
     </div>
   );
 }
@@ -77,11 +75,10 @@ export default function Main() {
     return '#E74C3C';
   };
 
-  // HLS 스트림 URL 배열
   const cameras = [
     { url: 'http://localhost:8000/cam1/stream.m3u8', name: 'CAM1' },
-    { url: 'http://localhost:8000/cam1/stream.m3u8', name: 'CAM2', attention: true },
-    { url: 'http://localhost:8000/cam1/stream.m3u8', name: 'CAM3' },
+    { url: 'http://localhost:8000/cam2/stream.m3u8', name: 'CAM2', attention: true },
+    { url: 'http://localhost:8000/cam3/stream.m3u8', name: 'CAM3' },
   ];
 
   const reports = [
@@ -94,7 +91,7 @@ export default function Main() {
     { id: 7, time: '2025.05.07 - 08:19' },
     { id: 8, time: '2025.05.07 - 08:19' },
     { id: 9, time: '2025.05.07 - 08:19' },
-    { id: 10, time: '2025.05.07 - 08:19'}
+    { id: 10, time: '2025.05.07 - 08:19' }
   ];
 
   return (
@@ -160,12 +157,12 @@ export default function Main() {
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={chartData}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="time" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }}  tickLine={{ strokeWidth: 2 }}/>
-                      <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }}  tickLine={{ strokeWidth: 2 }}/>
+                      <XAxis dataKey="time" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
+                      <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
                       <Tooltip />
-                      <Line type="monotone" dataKey="CAM1" stroke="#1FC295" strokeWidth={3}/>
-                      <Line type="monotone" dataKey="CAM2" stroke="#FFD54F" strokeWidth={3}/>
-                      <Line type="monotone" dataKey="CAM3" stroke="#E74C3C" strokeWidth={3}/>
+                      <Line type="monotone" dataKey="CAM1" stroke="#1FC295" strokeWidth={3} />
+                      <Line type="monotone" dataKey="CAM2" stroke="#FFD54F" strokeWidth={3} />
+                      <Line type="monotone" dataKey="CAM3" stroke="#E74C3C" strokeWidth={3} />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>

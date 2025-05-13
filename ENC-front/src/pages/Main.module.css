@@ -1,3 +1,5 @@
+/* src/components/Main.module.css */
+
 /* Wrapper & Collapse */
 .wrapper {
   display: flex;
@@ -136,7 +138,24 @@
 .camBox {
   position: relative;
   flex: 1;
-  border: 2px solid transparent;
+}
+.camVideo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 4px solid #27314D;
+}
+/* 비디오에만 적용되는 붉은 테두리 + 깜빡임 애니메이션 */
+@keyframes blink-border {
+  0%, 100% { border-color: #E74C3C; }
+  50% { border-color: transparent; }
+}
+.attentionVideo {
+  /* 0.5초 간격으로 10회 = 5초 동안 깜빡이고 */
+  animation: blink-border 0.5s ease-in-out 10;
+  /* 애니메이션이 끝나면 마지막 프레임을 그대로 유지 */
+  animation-fill-mode: forwards;
+  border-width: 4px;
 }
 .attention {
   position: absolute;
@@ -167,6 +186,8 @@
 }
 .rightColumn {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Stats Card */
@@ -225,18 +246,17 @@
   font-size: 0.9rem;
 }
 
-/* === statsLabels 수정 === */
+/* Stats Labels */
 .statsLabels {
   display: flex;
   justify-content: space-between;
-  /* 차트 내부 margin(약 40px) 만큼 왼쪽으로 띄워서 정렬 */
-  margin: 0 20px 0 60px;
+  margin: 0;
   color: #1FC295;
   font-size: 1rem;
 }
 .statsLabels > div:nth-child(1) {
-  flex: 1.5;
-  text-align: left;
+  flex: 2;
+  text-align: center;
 }
 .statsLabels > div:nth-child(2) {
   flex: 1;
@@ -274,15 +294,16 @@
 .reportsContainer {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
   justify-content: space-between;
 }
 .reportsBox {
   background: #27314D;
   padding: 20px;
   box-sizing: border-box;
+  flex: 1;
   overflow-y: auto;
-  max-height: 400px;
+  max-height: 555px;
 }
 .reportItem {
   background: #1F2A40;

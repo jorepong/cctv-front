@@ -1,18 +1,15 @@
+/* Wrapper & Collapse */
 .wrapper {
   display: flex;
   height: 100%;
   background-color: #1F2A40;
   transition: all 0.3s ease;
 }
-
-/* 사이드바 숨김 상태 */
 .collapsed .sidebar {
   width: 0;
   padding: 0;
   overflow: hidden;
 }
-
-/* 사이드바가 접히면 메인 콘텐츠에 센터링 스타일 적용 */
 .collapsed .content {
   flex: none;
   width: 100%;
@@ -29,8 +26,6 @@
   box-sizing: border-box;
   transition: width 0.3s ease, padding 0.3s ease;
 }
-
-/* 햄버거 버튼 */
 .hamburger {
   position: absolute;
   top: 20px;
@@ -45,7 +40,6 @@
   width: 24px;
   height: 24px;
 }
-
 .logo {
   font-size: 1.25rem;
   font-weight: bold;
@@ -99,15 +93,11 @@
   overflow-y: auto;
   transition: all 0.3s ease;
 }
-
-/* 페이지 헤더: 뒤로가기 + 타이틀 */
 .pageHeader {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
 }
-
-/* 뒤로가기 버튼 */
 .backButton {
   background: none;
   border: none;
@@ -121,20 +111,14 @@
   width: 24px;
   height: 24px;
 }
-
-/* 페이지 타이틀 */
 .title {
   color: #fff;
   font-size: 1.75rem;
-  margin: 0; /* pageHeader에서 margin-bottom만 주고 위아래 마진 제거 */
+  margin: 0;
 }
-
-/* Header - 로고 영역 */
 .header {
   width: 100%;
 }
-
-/* 학교 로고 */
 .schoolLogo {
   position: absolute;
   top: 20px;
@@ -154,11 +138,6 @@
   flex: 1;
   border: 2px solid transparent;
 }
-.camBox img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 .attention {
   position: absolute;
   top: 10px;
@@ -174,7 +153,7 @@
   margin-top: 0.5rem;
 }
 
-/* --- Main Area --- */
+/* Main Area */
 .mainArea {
   display: flex;
   gap: 20px;
@@ -190,7 +169,7 @@
   flex: 1;
 }
 
-/* 통계 카드 */
+/* Stats Card */
 .statsCard {
   background: #27314D;
   padding: 20px;
@@ -203,14 +182,13 @@
   gap: 20px;
 }
 .chartBox {
-  flex: 1;
+  flex: 2;
 }
-.chartBox img {
-  width: 100%;
-  height: auto;
+.countBox,
+.donutBox {
+  flex: 1;
 }
 .countBox {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -225,7 +203,6 @@
   margin-top: 0.5rem;
 }
 .donutBox {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -247,16 +224,30 @@
   white-space: nowrap;
   font-size: 0.9rem;
 }
+
+/* === statsLabels 수정 === */
 .statsLabels {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  /* 차트 내부 margin(약 40px) 만큼 왼쪽으로 띄워서 정렬 */
+  margin: 0 20px 0 60px;
   color: #1FC295;
   font-size: 1rem;
-  margin-left: 3rem;
-  padding: 0 20px;
+}
+.statsLabels > div:nth-child(1) {
+  flex: 1.5;
+  text-align: left;
+}
+.statsLabels > div:nth-child(2) {
+  flex: 1;
+  text-align: center;
+}
+.statsLabels > div:nth-child(3) {
+  flex: 1;
+  text-align: center;
 }
 
-/* Map 영역 전체를 감싸는 컨테이너 */
+/* Map */
 .mapContainer {
   display: flex;
   flex-direction: column;
@@ -279,7 +270,7 @@
   font-size: 1rem;
 }
 
-/* Reports 콘테이너 */
+/* Reports */
 .reportsContainer {
   display: flex;
   flex-direction: column;
@@ -291,7 +282,7 @@
   padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
-  flex: 1;
+  max-height: 400px;
 }
 .reportItem {
   background: #1F2A40;

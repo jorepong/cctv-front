@@ -89,6 +89,12 @@ export default function Main() {
     { id: 2, time: '2025.05.07 - 14:37' },
     { id: 3, time: '2025.05.07 - 11:06' },
     { id: 4, time: '2025.05.07 - 08:19' },
+    { id: 5, time: '2025.05.07 - 08:19' },
+    { id: 6, time: '2025.05.07 - 08:19' },
+    { id: 7, time: '2025.05.07 - 08:19' },
+    { id: 8, time: '2025.05.07 - 08:19' },
+    { id: 9, time: '2025.05.07 - 08:19' },
+    { id: 10, time: '2025.05.07 - 08:19'}
   ];
 
   return (
@@ -154,12 +160,12 @@ export default function Main() {
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={chartData}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="time" stroke="#B0B8C4" />
-                      <YAxis stroke="#B0B8C4" />
+                      <XAxis dataKey="time" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }}  tickLine={{ strokeWidth: 2 }}/>
+                      <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }}  tickLine={{ strokeWidth: 2 }}/>
                       <Tooltip />
-                      <Line type="monotone" dataKey="CAM1" stroke="#1FC295" />
-                      <Line type="monotone" dataKey="CAM2" stroke="#FFD54F" />
-                      <Line type="monotone" dataKey="CAM3" stroke="#E74C3C" />
+                      <Line type="monotone" dataKey="CAM1" stroke="#1FC295" strokeWidth={3}/>
+                      <Line type="monotone" dataKey="CAM2" stroke="#FFD54F" strokeWidth={3}/>
+                      <Line type="monotone" dataKey="CAM3" stroke="#E74C3C" strokeWidth={3}/>
                     </LineChart>
                   </ResponsiveContainer>
                 </div>

@@ -18,7 +18,11 @@ import statisticGray from '../assets/statistic_gray.png';
 import hamburgerIcon from '../assets/hamburgerIcon.png';
 import backIcon from '../assets/backIcon.png';
 
-function CamPlayer({ url, attention }) {
+import cam1Cap from '../assets/CAM1src.jpg';
+import cam2Cap from '../assets/CAM2src.jpg';
+import cam3Cap from '../assets/CAM3src.png';
+
+function CamPlayer({ url, attention, name, captureSrc, density }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -41,11 +45,14 @@ function CamPlayer({ url, attention }) {
         autoPlay
         muted
         className={`${styles.camVideo} ${attention ? styles.attentionVideo : ''}`}
-        style={{ width: '100%', height: 'auto' }}
       />
       {attention && <div className={styles.attention}>Attention</div>}
-      <div className={styles.camLabel}>
-        {url.split('/').slice(-2, -1)[0].toUpperCase()}
+      <div className={styles.camLabel}>{name}</div>
+      <div className={styles.captureBox}>
+        <img src={captureSrc} alt={`${name} capture`} className={styles.captureImg} />
+        {/* <div className={styles.densityLabel}>{density}</div> */
+          <div className={styles.densityLabel}>{name}'s density</div>
+        }
       </div>
     </div>
   );
@@ -76,9 +83,28 @@ export default function Main() {
   };
 
   const cameras = [
-    { url: 'http://localhost:8000/cam1/stream.m3u8', name: 'CAM1' },
-    { url: 'http://localhost:8000/cam2/stream.m3u8', name: 'CAM2', attention: true },
-    { url: 'http://localhost:8000/cam3/stream.m3u8', name: 'CAM3' },
+    {
+      url: 'http://localhost:8000/cam1/stream.m3u8',
+      name: 'CAM1',
+      //captureSrc: 'http://localhost:8000/cam1/capture.jpg',
+      captureSrc: cam1Cap,
+      density: '60%',
+    },
+    {
+      url: 'http://localhost:8000/cam2/stream.m3u8',
+      name: 'CAM2',
+      attention: true,
+      //captureSrc: 'http://localhost:8000/cam2/capture.jpg',
+      captureSrc: cam2Cap,
+      density: '80%',
+    },
+    {
+      url: 'http://localhost:8000/cam3/stream.m3u8',
+      name: 'CAM3',
+      //captureSrc: 'http://localhost:8000/cam3/capture.jpg',
+      captureSrc: cam3Cap,
+      density: '20%',
+    },
   ];
 
   const reports = [
@@ -108,23 +134,33 @@ export default function Main() {
         <ul className={styles.menu}>
           <li>
             <img src={homePurple} alt="Home" className={styles.menuIcon} />
-            <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ''}>Dash Board</NavLink>
+            <NavLink to="/" className={({ isActive }) => isActive ? styles.active : ''}>
+              Dash Board
+            </NavLink>
           </li>
           <li>
             <img src={statisticGray} alt="Statistics" className={styles.menuIcon} />
-            <NavLink to="/statistics" className={({ isActive }) => isActive ? styles.active : ''}>Statistics</NavLink>
+            <NavLink to="/statistics" className={({ isActive }) => isActive ? styles.active : ''}>
+              Statistics
+            </NavLink>
           </li>
           <li>
             <img src={mapGray} alt="Map" className={styles.menuIcon} />
-            <NavLink to="/map" className={({ isActive }) => isActive ? styles.active : ''}>Map</NavLink>
+            <NavLink to="/map" className={({ isActive }) => isActive ? styles.active : ''}>
+              Map
+            </NavLink>
           </li>
           <li>
             <img src={reportGray} alt="Report" className={styles.menuIcon} />
-            <NavLink to="/report" className={({ isActive }) => isActive ? styles.active : ''}>Report</NavLink>
+            <NavLink to="/report" className={({ isActive }) => isActive ? styles.active : ''}>
+              Report
+            </NavLink>
           </li>
           <li>
             <img src={camGray} alt="CAM" className={styles.menuIcon} />
-            <NavLink to="/cam" className={({ isActive }) => isActive ? styles.active : ''}>CAM</NavLink>
+            <NavLink to="/cam" className={({ isActive }) => isActive ? styles.active : ''}>
+              CAM
+            </NavLink>
           </li>
         </ul>
       </nav>
@@ -145,7 +181,14 @@ export default function Main() {
 
         <section className={styles.cameras}>
           {cameras.map(cam => (
-            <CamPlayer key={cam.name} url={cam.url} attention={cam.attention} />
+            <CamPlayer
+              key={cam.name}
+              url={cam.url}
+              attention={cam.attention}
+              name={cam.name}
+              captureSrc={cam.captureSrc}
+              density={cam.density}
+            />
           ))}
         </section>
 
@@ -157,8 +200,17 @@ export default function Main() {
                   <ResponsiveContainer width="100%" height={200}>
                     <LineChart data={chartData}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="time" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
-                      <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
+                      <XAxis
+                        dataKey="time"
+                        stroke="#B0B8C4"
+                        axisLine={{ strokeWidth: 2 }}
+                        tickLine={{ strokeWidth: 2 }}
+                      />
+                      <YAxis
+                        stroke="#B0B8C4"
+                        axisLine={{ strokeWidth: 2 }}
+                        tickLine={{ strokeWidth: 2 }}
+                      />
                       <Tooltip />
                       <Line type="monotone" dataKey="CAM1" stroke="#1FC295" strokeWidth={3} />
                       <Line type="monotone" dataKey="CAM2" stroke="#FFD54F" strokeWidth={3} />

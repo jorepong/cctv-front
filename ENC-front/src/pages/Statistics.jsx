@@ -1,5 +1,5 @@
 // src/pages/Statistics.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -21,7 +21,7 @@ function Statistics() {
   const [activeCam, setActiveCam] = useState('CAM1');
 
   // ─── 1) Daily: Today vs Yesterday ─────────────────────────────────────────────
-  const dailyTodayData = {
+  const [dailyTodayData, setDailyTodayData] = useState({
     CAM1: [
       { time: '10:00', value: 30 },
       { time: '11:00', value: 40 },
@@ -43,8 +43,16 @@ function Statistics() {
       { time: '13:00', value: 60 },
       { time: '14:00', value: 45 },
     ],
-  };
-  const dailyYesterdayData = {
+  });
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/daily/today')
+  //     .then(res => res.json())
+  //     .then(data => setDailyTodayData(data))
+  //     .catch(err => console.error('Failed to load daily today data:', err));
+  // }, []);
+
+  const [dailyYesterdayData, setDailyYesterdayData] = useState({
     CAM1: [
       { time: '10:00', value: 25 },
       { time: '11:00', value: 35 },
@@ -66,7 +74,15 @@ function Statistics() {
       { time: '13:00', value: 55 },
       { time: '14:00', value: 42 },
     ],
-  };
+  });
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/daily/yesterday')
+  //     .then(res => res.json())
+  //     .then(data => setDailyYesterdayData(data))
+  //     .catch(err => console.error('Failed to load daily yesterday data:', err));
+  // }, []);
+
   const dailyData = dailyTodayData[activeCam].map(d => ({
     time: d.time,
     current: d.value,
@@ -74,7 +90,7 @@ function Statistics() {
   }));
 
   // ─── 2) Weekly: This Week vs Last Week ───────────────────────────────────────────
-  const weeklyThisData = {
+  const [weeklyThisData, setWeeklyThisData] = useState({
     CAM1: [
       { day: 'Mon', value: 30 },
       { day: 'Tue', value: 50 },
@@ -102,8 +118,16 @@ function Statistics() {
       { day: 'Sat', value: 50 },
       { day: 'Sun', value: 35 },
     ],
-  };
-  const weeklyLastData = {
+  });
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/weekly/this')
+  //     .then(res => res.json())
+  //     .then(data => setWeeklyThisData(data))
+  //     .catch(err => console.error('Failed to load weekly this-week data:', err));
+  // }, []);
+
+  const [weeklyLastData, setWeeklyLastData] = useState({
     CAM1: [
       { day: 'Mon', value: 20 },
       { day: 'Tue', value: 40 },
@@ -131,7 +155,15 @@ function Statistics() {
       { day: 'Sat', value: 42 },
       { day: 'Sun', value: 28 },
     ],
-  };
+  });
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/weekly/last')
+  //     .then(res => res.json())
+  //     .then(data => setWeeklyLastData(data))
+  //     .catch(err => console.error('Failed to load weekly last-week data:', err));
+  // }, []);
+
   const weeklyData = weeklyThisData[activeCam].map(d => ({
     day: d.day,
     current: d.value,
@@ -139,7 +171,7 @@ function Statistics() {
   }));
 
   // ─── 3) Monthly: This Month vs Last Month ────────────────────────────────────────
-  const monthlyThisData = {
+  const [monthlyThisData, setMonthlyThisData] = useState({
     CAM1: [
       { week: 'Week1', value: 80 },
       { week: 'Week2', value: 95 },
@@ -158,8 +190,16 @@ function Statistics() {
       { week: 'Week3', value: 60 },
       { week: 'Week4', value: 90 },
     ],
-  };
-  const monthlyLastData = {
+  });
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/monthly/this')
+  //     .then(res => res.json())
+  //     .then(data => setMonthlyThisData(data))
+  //     .catch(err => console.error('Failed to load monthly this-month data:', err));
+  // }, []);
+
+  const [monthlyLastData, setMonthlyLastData] = useState({
     CAM1: [
       { week: 'Week1', value: 60 },
       { week: 'Week2', value: 85 },
@@ -178,7 +218,15 @@ function Statistics() {
       { week: 'Week3', value: 40 },
       { week: 'Week4', value: 80 },
     ],
-  };
+  });
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/monthly/last')
+  //     .then(res => res.json())
+  //     .then(data => setMonthlyLastData(data))
+  //     .catch(err => console.error('Failed to load monthly last-month data:', err));
+  // }, []);
+
   const monthlyData = monthlyThisData[activeCam].map(d => ({
     week: d.week,
     current: d.value,
@@ -234,7 +282,7 @@ function Statistics() {
           <img src={schoolLogo} alt="Dongguk University" className={styles.schoolLogo} />
         </div>
 
-        {/* CAM 탭 */}
+        {/* CAM tabs */}
         <div className={styles.tabs}>
           {['CAM1', 'CAM2', 'CAM3'].map(cam => (
             <button
@@ -247,7 +295,7 @@ function Statistics() {
           ))}
         </div>
 
-        {/* 비교 차트 3개 */}
+        {/* Comparison charts */}
         <div className={styles.multiCharts}>
           {/* Daily */}
           <div className={styles.chartBox}>
@@ -255,8 +303,8 @@ function Statistics() {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={dailyData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="time" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }}  tickLine={{ strokeWidth: 2 }}  />
-                <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }}/>
+                <XAxis dataKey="time" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
+                <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
                 <Tooltip />
                 <Legend verticalAlign="bottom" align="center" />
                 <Line type="monotone" dataKey="current" name="Today" stroke="#FC0101" dot strokeWidth={3} />
@@ -271,12 +319,12 @@ function Statistics() {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={weeklyData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="day" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }}  tickLine={{ strokeWidth: 2 }}/>
-                <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }}/>
+                <XAxis dataKey="day" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
+                <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
                 <Tooltip />
                 <Legend verticalAlign="bottom" align="center" />
-                <Line type="monotone" dataKey="current" name="This Week" stroke="#FC0101" dot strokeWidth={3}/>
-                <Line type="monotone" dataKey="previous" name="Last Week" stroke="#F9F903" dot strokeWidth={3}/>
+                <Line type="monotone" dataKey="current" name="This Week" stroke="#FC0101" dot strokeWidth={3} />
+                <Line type="monotone" dataKey="previous" name="Last Week" stroke="#F9F903" dot strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -287,12 +335,12 @@ function Statistics() {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={monthlyData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="week" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }}  tickLine={{ strokeWidth: 2 }}/>
-                <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }}/>
+                <XAxis dataKey="week" stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
+                <YAxis stroke="#B0B8C4" axisLine={{ strokeWidth: 2 }} tickLine={{ strokeWidth: 2 }} />
                 <Tooltip />
                 <Legend verticalAlign="bottom" align="center" />
-                <Line type="monotone" dataKey="current" name="This Month" stroke="#FC0101" dot strokeWidth={3}/>
-                <Line type="monotone" dataKey="previous" name="Last Month" stroke="#F9F903" dot strokeWidth={3}/>
+                <Line type="monotone" dataKey="current" name="This Month" stroke="#FC0101" dot strokeWidth={3} />
+                <Line type="monotone" dataKey="previous" name="Last Month" stroke="#F9F903" dot strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
           </div>

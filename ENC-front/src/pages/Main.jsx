@@ -50,9 +50,7 @@ function CamPlayer({ url, attention, name, captureSrc, density }) {
       <div className={styles.camLabel}>{name}</div>
       <div className={styles.captureBox}>
         <img src={captureSrc} alt={`${name} capture`} className={styles.captureImg} />
-        {/* <div className={styles.densityLabel}>{density}</div> */
-          <div className={styles.densityLabel}>{name}'s density</div>
-        }
+        <div className={styles.densityLabel}>{name}'s density</div>
       </div>
     </div>
   );
@@ -62,63 +60,97 @@ export default function Main() {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  const statsData = [
+  // === Stats Data ===
+  const [statsData, setStatsData] = useState([
     { name: 'CAM1', count: 60 },
     { name: 'CAM2', count: 80 },
     { name: 'CAM3', count: 20 },
-  ];
+  ]);
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/stats')
+  //     .then(res => res.json())
+  //     .then(data => setStatsData(data))
+  //     .catch(err => console.error('Failed to load stats:', err));
+  // }, []);
 
-  const chartData = [
+  // === Chart Data ===
+  const [chartData, setChartData] = useState([
     { time: '10:00', CAM1: 30, CAM2: 60, CAM3: 15 },
     { time: '11:00', CAM1: 40, CAM2: 70, CAM3: 25 },
     { time: '12:00', CAM1: 60, CAM2: 80, CAM3: 20 },
     { time: '13:00', CAM1: 70, CAM2: 85, CAM3: 30 },
     { time: '14:00', CAM1: 60, CAM2: 75, CAM3: 20 },
-  ];
+  ]);
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/chart')
+  //     .then(res => res.json())
+  //     .then(data => setChartData(data))
+  //     .catch(err => console.error('Failed to load chart:', err));
+  // }, []);
 
-  const getColor = (count) => {
-    if (count < 50) return '#1FC295';
-    if (count < 80) return '#FFD54F';
-    return '#E74C3C';
-  };
-
-  const cameras = [
+  // === Cameras Config ===
+  const [cameras, setCameras] = useState([
     {
-      url: 'http://localhost:8000/cam1/stream.m3u8',
+      url: 'http://34.64.193.136/stream1.m3u8',
       name: 'CAM1',
-      //captureSrc: 'http://localhost:8000/cam1/capture.jpg',
-      captureSrc: cam1Cap,
+      attention: false,
+      captureSrc: cam1Cap, // 하드코딩된 캡처 이미지
       density: '60%',
     },
     {
       url: 'http://localhost:8000/cam2/stream.m3u8',
       name: 'CAM2',
       attention: true,
-      //captureSrc: 'http://localhost:8000/cam2/capture.jpg',
-      captureSrc: cam2Cap,
+      captureSrc: cam2Cap, // 하드코딩된 캡처 이미지
       density: '80%',
     },
     {
       url: 'http://localhost:8000/cam3/stream.m3u8',
       name: 'CAM3',
-      //captureSrc: 'http://localhost:8000/cam3/capture.jpg',
-      captureSrc: cam3Cap,
+      attention: false,
+      captureSrc: cam3Cap, // 하드코딩된 캡처 이미지
       density: '20%',
     },
-  ];
+  ]);
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/cameras')
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       // data는 [{ url, name, attention, captureSrc, density }, …] 형태여야 합니다.
+  //       setCameras(data);
+  //     })
+  //     .catch(err => console.error('Failed to load cameras:', err));
+  // }, []);
 
-  const reports = [
+  // === Reports List ===
+  const [reports, setReports] = useState([
     { id: 1, time: '2025.05.07 - 17:10' },
     { id: 2, time: '2025.05.07 - 14:37' },
     { id: 3, time: '2025.05.07 - 11:06' },
-    { id: 4, time: '2025.05.07 - 08:19' },
-    { id: 5, time: '2025.05.07 - 08:19' },
-    { id: 6, time: '2025.05.07 - 08:19' },
-    { id: 7, time: '2025.05.07 - 08:19' },
-    { id: 8, time: '2025.05.07 - 08:19' },
-    { id: 9, time: '2025.05.07 - 08:19' },
-    { id: 10, time: '2025.05.07 - 08:19' }
-  ];
+    { id: 4, time: '2025.05.07 - 11:06' },
+    { id: 5, time: '2025.05.07 - 11:06' },
+    { id: 6, time: '2025.05.07 - 11:06' },
+    { id: 7, time: '2025.05.07 - 11:06' },
+    { id: 8, time: '2025.05.07 - 11:06' },
+    { id: 9, time: '2025.05.07 - 11:06' },
+    { id: 10, time: '2025.05.07 - 11:06' },
+  ]);
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/reports')
+  //     .then(res => res.json())
+  //     .then(data => setReports(data))
+  //     .catch(err => console.error('Failed to load reports:', err));
+  // }, []);
+
+  const getColor = (count) => {
+    if (count < 50) return '#1FC295';
+    if (count < 80) return '#FFD54F';
+    return '#E74C3C';
+  };
 
   return (
     <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ''}`}>

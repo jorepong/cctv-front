@@ -1,5 +1,5 @@
 // src/components/Report.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Report.module.css';
 
@@ -15,7 +15,8 @@ import backIcon from '../assets/backIcon.png';
 function Report() {
   const [collapsed, setCollapsed] = useState(false);
 
-  const reports = [
+  // === Reports Data ===
+  const [reports, setReports] = useState([
     { id: 1, timestamp: '2025.05.07 - 17:10', desc: 'anonymous people sent report' },
     { id: 2, timestamp: '2025.05.07 - 14:37', desc: 'anonymous people sent report' },
     { id: 3, timestamp: '2025.05.07 - 11:06', desc: 'anonymous people sent report' },
@@ -28,7 +29,14 @@ function Report() {
     { id: 10, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' },
     { id: 11, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' },
     { id: 12, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' }
-  ];
+  ]);
+  // // Uncomment when API is ready:
+  // useEffect(() => {
+  //   fetch('/api/reports')
+  //     .then(res => res.json())
+  //     .then(data => setReports(data))
+  //     .catch(err => console.error('Failed to load reports:', err));
+  // }, []);
 
   return (
     <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ''}`}>
@@ -78,7 +86,7 @@ function Report() {
 
       {/* Content */}
       <div className={styles.content}>
-        {/* Header: 뒤로가기 + 타이틀 + 로고 */}
+        {/* Header: back button, title, logo */}
         <div className={styles.pageHeader}>
           <div className={styles.titleGroup}>
             {collapsed && (
@@ -91,7 +99,7 @@ function Report() {
           <img src={schoolLogo} alt="Dongguk University" className={styles.schoolLogo} />
         </div>
 
-        {/* Report 목록 */}
+        {/* Report list */}
         <div className={styles.reportsContainer}>
           <div className={styles.reportsBox}>
             {reports.map(report => (

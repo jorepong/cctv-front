@@ -44,13 +44,44 @@ function Statistics() {
       { time: '14:00', value: 45 },
     ],
   });
+
   // // Uncomment when API is ready:
-  // useEffect(() => {
-  //   fetch('/api/daily/today')
-  //     .then(res => res.json())
-  //     .then(data => setDailyTodayData(data))
-  //     .catch(err => console.error('Failed to load daily today data:', err));
-  // }, []);
+  /*  useEffect(() => {
+      const cameraIds = [1, 2, 3];           // 사용할 카메라 ID 목록
+      const dateRange = 'today';            // 고정: 오늘
+      const groupBy   = 'hour_of_day';      // 시간별 그룹화
+
+      Promise.all(
+        cameraIds.map(id =>
+          fetch(`/congestion/statistics/?camera_id=${id}&date_range=${dateRange}&group_by=${groupBy}`)
+            .then(res => {
+              if (!res.ok) throw new Error(`Camera ${id} fetch failed (${res.status})`);
+              return res.json();
+            })
+            .then(json => ({
+              cameraId: id,
+              stats: json.statistics,  // [{ hour: X, avg_person_count: Y, … }, …]
+            }))
+        )
+      )
+      .then(results => {
+        // 결과를 { CAM1: [...], CAM2: [...], CAM3: [...] } 형태로 정리
+        const mappedData = results.reduce((acc, { cameraId, stats }) => {
+          const key = `CAM${cameraId}`;
+          acc[key] = stats.map(({ hour, avg_person_count }) => {
+            // 시간 포맷팅: 9 → "09:00", 14 → "14:00"
+            const hh = hour.toString().padStart(2, '0');
+            return { time: `${hh}:00`, value: avg_person_count };
+          });
+          return acc;
+        }, {});
+
+        setDailyTodayData(mappedData);
+      })
+      .catch(err => {
+        console.error('Failed to fetch today’s congestion stats:', err);
+      });
+    }, []); // 마운트 시 한 번 실행 */
 
   const [dailyYesterdayData, setDailyYesterdayData] = useState({
     CAM1: [
@@ -76,12 +107,60 @@ function Statistics() {
     ],
   });
   // // Uncomment when API is ready:
-  // useEffect(() => {
-  //   fetch('/api/daily/yesterday')
-  //     .then(res => res.json())
-  //     .then(data => setDailyYesterdayData(data))
-  //     .catch(err => console.error('Failed to load daily yesterday data:', err));
-  // }, []);
+  /*  useEffect(() => {
+      // 1. 어제 날짜 계산
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      const pad = n => n.toString().padStart(2, '0');
+      const yyyy = yesterday.getFullYear();
+      const mm = pad(yesterday.getMonth() + 1);
+      const dd = pad(yesterday.getDate());
+      const dateStr = `${yyyy}-${mm}-${dd}`;                    // "2025-05-15" 같은 형태
+      const dateRange = `${dateStr}:${dateStr}`;                // "2025-05-15:2025-05-15"
+
+      // 2. 카메라 ID 및 그룹화 기준 설정
+      const cameraIds = [1, 2, 3];
+      const groupBy = 'hour_of_day';
+
+      // 3. 병렬로 API 호출
+      Promise.all(
+        cameraIds.map(id =>
+          fetch(
+            `/congestion/statistics/` +
+            `?camera_id=${id}` +
+            `&date_range=${dateRange}` +
+            `&group_by=${groupBy}`
+          )
+            .then(res => {
+              if (!res.ok) throw new Error(`Camera ${id} fetch failed (${res.status})`);
+              return res.json();
+            })
+            .then(json => ({
+              cameraId: id,
+              stats: json.statistics,  // [{ hour, avg_person_count, … }, …]
+            }))
+        )
+      )
+      .then(results => {
+        // 4. 결과를 { CAM1: [...], CAM2: [...], CAM3: [...] } 형태로 매핑
+        const mapped = results.reduce((acc, { cameraId, stats }) => {
+          const key = `CAM${cameraId}`;
+          acc[key] = stats.map(({ hour, avg_person_count }) => {
+            const hh = hour.toString().padStart(2, '0');
+            return { time: `${hh}:00`, value: avg_person_count };
+          });
+          return acc;
+        }, {});
+        
+        // 5. 상태 업데이트
+        setDailyYesterdayData(mapped);
+      })
+      .catch(err => {
+        console.error('Failed to fetch yesterday’s congestion stats:', err);
+      });
+    }, []);  // 컴포넌트 마운트 시 한 번만 실행
+  */
 
   const dailyData = dailyTodayData[activeCam].map(d => ({
     time: d.time,

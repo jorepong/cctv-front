@@ -178,16 +178,52 @@ export default function Main() {
       density: '20%',
     },
   ]);
-  // // Uncomment when API is ready: ****여기 나중에 4. AI 분석 완료된 스냅샷 이미지 조회 **** 부분에서 찾아서 추가해야 함!!
-  // useEffect(() => {
-  //   fetch('/api/cameras')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       // data는 [{ url, name, attention, captureSrc, density }, …] 형태여야 합니다.
-  //       setCameras(data);
-  //     })
-  //     .catch(err => console.error('Failed to load cameras:', err));
-  // }, []);
+  // // Uncomment when API is ready:
+  /*
+    useEffect(() => {
+      async function updateCameraFeeds() {
+        try {
+          const updated = await Promise.all(
+            cameras.map(async (cam, idx) => {
+              const cameraId  = idx + 1; // CAM1→1, CAM2→2, …
+              const snapshotId = cameraId;
+
+              // 1) 스트림 URL 조회
+              const streamRes = await fetch(`/cameras/${cameraId}/stream_url/`);
+              if (!streamRes.ok) throw new Error(`Camera ${cameraId} stream fetch error`);
+              const { stream_url } = await streamRes.json();
+
+              // 2) AI 처리된 스냅샷 URL 조회
+              const snapRes = await fetch(`/snapshots/${snapshotId}/processed_image/`);
+              if (!snapRes.ok) throw new Error(`Snapshot ${snapshotId} fetch error`);
+              const snapJson = await snapRes.json();
+              const processedImageUrl = snapJson.processed_image_url;
+
+              // 3) attention 상태 조회 (HIGH_CONGESTION 알림이 있으면 true)
+              const alertRes = await fetch(`/alerts/?camera_id=${cameraId}&status=active`);
+              if (!alertRes.ok) throw new Error(`Alerts for camera ${cameraId} fetch error`);
+              const alertJson = await alertRes.json();
+              const hasHighCongestion = alertJson.alerts
+                .some(alert => alert.alert_type === 'HIGH_CONGESTION');
+
+              return {
+                ...cam,
+                url: stream_url,               // 업데이트된 스트림 URL
+                captureSrc: processedImageUrl, // 업데이트된 스냅샷 이미지
+                attention: hasHighCongestion,   // HIGH_CONGESTION 여부
+              };
+            })
+          );
+
+          setCameras(updated);
+        } catch (err) {
+          console.error('Camera feed update failed:', err);
+        }
+      }
+
+      updateCameraFeeds();
+    }, []); // 컴포넌트 마운트 시 한 번 실행
+  */
 
   // === Reports List ===
   const [reports, setReports] = useState([
@@ -202,6 +238,7 @@ export default function Main() {
     { id: 9, time: '2025.05.07 - 11:06' },
     { id: 10, time: '2025.05.07 - 11:06' },
   ]);
+
   // // Uncomment when API is ready:
   /*  useEffect(() => {
       const status    = 'all';    // 조회할 상태 (active/acknowledged/all)
@@ -404,7 +441,7 @@ export default function Main() {
                     <div className={styles.reportTitle}>
                       Report #{r.id}: {r.time}
                     </div>
-                    <div className={styles.reportDesc}>anonymous people</div>
+                    <div className={styles.reportDesc}>High Density Alert!</div>
                   </div>
                 ))}
               </div>

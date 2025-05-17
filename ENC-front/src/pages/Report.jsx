@@ -17,26 +17,46 @@ function Report() {
 
   // === Reports Data ===
   const [reports, setReports] = useState([
-    { id: 1, timestamp: '2025.05.07 - 17:10', desc: 'anonymous people sent report' },
-    { id: 2, timestamp: '2025.05.07 - 14:37', desc: 'anonymous people sent report' },
-    { id: 3, timestamp: '2025.05.07 - 11:06', desc: 'anonymous people sent report' },
-    { id: 4, timestamp: '2025.05.07 - 08:19', desc: 'anonymous people sent report' },
-    { id: 5, timestamp: '2025.05.07 - 05:02', desc: 'anonymous people sent report' },
-    { id: 6, timestamp: '2025.05.06 - 19:41', desc: 'anonymous people sent report' },
-    { id: 7, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' },
-    { id: 8, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' },
-    { id: 9, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' },
-    { id: 10, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' },
-    { id: 11, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' },
-    { id: 12, timestamp: '2025.05.06 - 15:17', desc: 'anonymous people sent report' }
+    { id: 1, timestamp: '2025.05.07 - 17:10', desc: 'High Density Alert!' },
+    { id: 2, timestamp: '2025.05.07 - 14:37', desc: 'High Density Alert!' },
+    { id: 3, timestamp: '2025.05.07 - 11:06', desc: 'High Density Alert!' },
+    { id: 4, timestamp: '2025.05.07 - 08:19', desc: 'High Density Alert!' },
+    { id: 5, timestamp: '2025.05.07 - 05:02', desc: 'High Density Alert!' },
+    { id: 6, timestamp: '2025.05.06 - 19:41', desc: 'High Density Alert!' },
+    { id: 7, timestamp: '2025.05.06 - 15:17', desc: 'High Density Alert!' },
+    { id: 8, timestamp: '2025.05.06 - 15:17', desc: 'High Density Alert!' },
+    { id: 9, timestamp: '2025.05.06 - 15:17', desc: 'High Density Alert!' },
+    { id: 10, timestamp: '2025.05.06 - 15:17', desc: 'High Density Alert!' },
+    { id: 11, timestamp: '2025.05.06 - 15:17', desc: 'High Density Alert!' },
+    { id: 12, timestamp: '2025.05.06 - 15:17', desc: 'High Density Alert!' }
   ]);
   // // Uncomment when API is ready:
-  // useEffect(() => {
-  //   fetch('/api/reports')
-  //     .then(res => res.json())
-  //     .then(data => setReports(data))
-  //     .catch(err => console.error('Failed to load reports:', err));
-  // }, []);
+  /*  useEffect(() => {
+      const fetchAlerts = async () => {
+        try {
+          // limit=20 으로 최근 20개만 조회
+          const res = await fetch(`/alerts?limit=20`);
+          if (!res.ok) {
+            throw new Error(`API error: ${res.status}`);
+          }
+          const data = await res.json();
+
+          // API에서 받은 alerts 배열을 순회하며 id, timestamp, desc 매핑
+          const mapped = data.alerts.map((alert, idx) => ({
+            id: idx + 1,
+            timestamp: alert.event_timestamp,   // ISO 문자열 그대로 사용
+            desc: alert.message                  // alert.message 를 설명으로
+          }));
+
+          setReports(mapped);
+        } catch (err) {
+          console.error('알림 조회 중 오류 발생:', err);
+        }
+      };
+
+      fetchAlerts();
+    }, []); // 빈 배열: 마운트 시 한 번만 호출
+  */
 
   return (
     <div className={`${styles.wrapper} ${collapsed ? styles.collapsed : ''}`}>
